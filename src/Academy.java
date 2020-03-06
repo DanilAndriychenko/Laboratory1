@@ -56,8 +56,9 @@ public class Academy {
             System.out.println("Choose an action:\n" +
                     "1. Add new faculty; \n" +
                     "2. Edit a faculty's name; \n" +
-                    "3. Delete a faculty;");
-            switch (Utility.nextActionNum(1, 3)) {
+                    "3. Delete a faculty;\n" +
+                    "4. Back to the previous menu;");
+            switch (Utility.nextActionNum(1, 4)) {
                 case 1:
                     addNewFaculty();
                     break;
@@ -96,6 +97,8 @@ public class Academy {
                         }
                     }
                     break;
+                case 4:
+                    return;
             }
         }
     }
@@ -106,29 +109,110 @@ public class Academy {
         do {
             name = DataInput.getString();
             if (!Utility.lineContainsOnlyLetters(name)) System.out.println("Incorrect value. Enter again: ");
-            else if (!facNameIsUnique(name))
+            else if (!NameIsUniqueInDynamicArray(name, faculties))
                 System.out.println("There is a faculty with the same name. Create a unique one.");
-        } while (!(Utility.lineContainsOnlyLetters(name) && facNameIsUnique(name)));
+        } while (!(Utility.lineContainsOnlyLetters(name) && NameIsUniqueInDynamicArray(name, faculties)));
         faculties.add(new Faculty(name));
     }
 
-    private static boolean facNameIsUnique(String name) {
-        for (int i = 0; i < faculties.getRealLength(); i++) {
-            if (faculties.get(i).toString().equals(name)) return false;
+    private static boolean NameIsUniqueInDynamicArray(String name, DynamicArray dynamicArray) {
+        for (int i = 0; i < dynamicArray.getRealLength(); i++) {
+            if (dynamicArray.get(i).toString().equals(name)) return false;
         }
         return true;
     }
 
     private static void performSecondCase() {
-        if (faculties.getRealLength() == 0)
+        if (faculties.getRealLength() == 0) {
             System.out.println("List of faculties is empty.\n" +
-                    "Before adding/editing/deleting department you need to create at least one faculty.");
-        else {
-            System.out.println("Choose faculty whose department you want to add/edit/delete.\n" +
-                    "List of faculties:");
-            for (int i = 0; i < faculties.getRealLength(); i++) System.out.println(faculties.get(i));
-            //TODO. Add numeration to displaying list. Then ask num of faculty user want to add/edit/delete.
-            //TODO. Create var <Faculty> where we gonna store  chosen one. Make switch for actions with departments.
+                    "Before adding/editing/deleting department you need to create at least one faculty.\n");
+            try {
+                TimeUnit.SECONDS.sleep(4);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+        else {
+            System.out.println("Choose faculty which department you want to add/edit/delete.\n" +
+                    "List of faculties:");
+            for (int i = 0; i < faculties.getRealLength(); i++) System.out.println("" + (i+1) + ". " + faculties.get(i));
+            int chosenNumOfFaculty = Utility.nextActionNum(1, faculties.getRealLength()) - 1;
+            Faculty chosenFaculty = (Faculty) faculties.get(chosenNumOfFaculty);
+            if (chosenFaculty.getDepartments().getRealLength() == 0) {
+                System.out.println("List of departments on " + chosenFaculty + " is empty.\n" +
+                        "Do you want to add one?[y/n]");
+                char yn = DataInput.getChar();
+                if (yn == 'y') {
+                    addNewDepartmentOnChosenFaculty(chosenFaculty);
+                    return;
+                }
+            }
+            else {
+                System.out.println("List of departments:");
+                for (int i = 0; i < chosenFaculty.getDepartments().getRealLength(); i++) System.out.println(chosenFaculty.getDepartments().get(i));
+            }
+            System.out.println("Choose an action:\n" +
+                    "1. Add new department; \n" +
+                    "2. Edit a department's name; \n" +
+                    "3. Delete a department;\n" +
+                    "4. Back to the previous menu;");
+            switch (Utility.nextActionNum(1, 4)) {
+                case 1:
+                    addNewDepartmentOnChosenFaculty(chosenFaculty);
+                    break;
+                case 2:
+                    String oldName = DataInput.getString("Enter old department's name: ");
+                    DynamicArray givenDepartments = chosenFaculty.getDepartments();
+                    for (int i = 0; i < givenDepartments.getRealLength(); i++) {
+                        if (givenDepartments.get(i).toString().equals(oldName)) {
+                            givenDepartments.delete(i);
+                            addNewDepartmentOnChosenFaculty(chosenFaculty);
+                            break;
+                        }
+                        if (i == givenDepartments.getRealLength() - 1) {
+                            System.out.println("You have input incorrect name. Changes cannot be done.");
+                            try {
+                                TimeUnit.SECONDS.sleep(3);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    break;
+                case 3:
+                    oldName = DataInput.getString("Enter old departments's name: ");
+                    givenDepartments = chosenFaculty.getDepartments();
+                    for (int i = 0; i < givenDepartments.getRealLength(); i++) {
+                        if (givenDepartments.get(i).toString().equals(oldName)) {
+                            givenDepartments.delete(i);
+                            break;
+                        }
+                        if (i == givenDepartments.getRealLength() - 1) {
+                            System.out.println("You have input incorrect name. Changes cannot be done.");
+                            try {
+                                TimeUnit.SECONDS.sleep(3);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    break;
+                case 4:
+                    return;
+            }
+        }
+    }
+
+    private static void addNewDepartmentOnChosenFaculty (Faculty chosenFaculty) {
+        String name;
+        DynamicArray givenDepartments = chosenFaculty.getDepartments();
+        System.out.println("Enter the name of new department: ");
+        do {
+            name = DataInput.getString();
+            if (!Utility.lineContainsOnlyLetters(name)) System.out.println("Incorrect value. Enter again: ");
+            else if (!NameIsUniqueInDynamicArray(name, givenDepartments))
+                System.out.println("There is a faculty with the same name. Create a unique one.");
+        } while (!(Utility.lineContainsOnlyLetters(name) && NameIsUniqueInDynamicArray(name, givenDepartments)));
+        givenDepartments.add(new Department(name, chosenFaculty));
     }
 }

@@ -26,6 +26,10 @@ public class Faculty {
         departments.add(new Department(name, this));
     }
 
+    public DynamicArray getDepartments() {
+        return departments;
+    }
+
     @Override
     public String toString() {
         return (name);
