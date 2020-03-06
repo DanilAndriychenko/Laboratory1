@@ -1,3 +1,5 @@
+import java.util.concurrent.TimeUnit;
+
 public class Academy {
 
     private static DynamicArray faculties, students;
@@ -67,6 +69,14 @@ public class Academy {
                             faculties.delete(i);
                             addNewFaculty();
                             break;
+                        }
+                        if (i == faculties.getRealLength() - 1) {
+                            System.out.println("You have input incorrect name. Changes cannot be done.");
+                            try {
+                                TimeUnit.SECONDS.sleep(3);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                     break;
