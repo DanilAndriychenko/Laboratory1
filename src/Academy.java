@@ -1,3 +1,5 @@
+import java.util.concurrent.TimeUnit;
+
 public class Academy {
 
     private static DynamicArray faculties, students;
@@ -38,7 +40,7 @@ public class Academy {
         }
     }
 
-    private static void performFirstCase (){
+    private static void performFirstCase() {
         if (faculties.getRealLength() == 0) {
             System.out.println("List of faculties is empty.\n" +
                     "Do you want to add one?[y/n]");
@@ -63,6 +65,14 @@ public class Academy {
                             addNewFaculty();
                             break;
                         }
+                        if (i == faculties.getRealLength() - 1) {
+                            System.out.println("You have input incorrect name. Changes cannot be done.");
+                            try {
+                                TimeUnit.SECONDS.sleep(3);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
                     break;
                 case 3:
@@ -84,14 +94,15 @@ public class Academy {
         do {
             name = DataInput.getString();
             if (!Utility.lineContainsOnlyLetters(name)) System.out.println("Incorrect value. Enter again: ");
-            else if (!facNameIsUnique(name)) System.out.println("There is a faculty with the same name. Create a unique one.");
+            else if (!facNameIsUnique(name))
+                System.out.println("There is a faculty with the same name. Create a unique one.");
         } while (!(Utility.lineContainsOnlyLetters(name) && facNameIsUnique(name)));
         faculties.add(new Faculty(name));
     }
 
-    private static boolean facNameIsUnique(String name){
-        for(int i = 0; i < faculties.getRealLength(); i++){
-            if(faculties.get(i).toString().equals(name)) return false;
+    private static boolean facNameIsUnique(String name) {
+        for (int i = 0; i < faculties.getRealLength(); i++) {
+            if (faculties.get(i).toString().equals(name)) return false;
         }
         return true;
     }
