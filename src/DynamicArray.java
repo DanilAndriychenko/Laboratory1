@@ -18,6 +18,7 @@ public class DynamicArray {
         int positionOfFirstEmptyElement = positionOfFirstEmptyElement();
         while (positionOfFirstEmptyElement + 1 < arr.length && arr[positionOfFirstEmptyElement + 1] != null) {
             arr[positionOfFirstEmptyElement] = arr[positionOfFirstEmptyElement + 1];
+            arr[positionOfFirstEmptyElement + 1] = null;
             positionOfFirstEmptyElement++;
         }
     }
