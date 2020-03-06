@@ -35,10 +35,14 @@ public class Academy {
         switch (action) {
             case 1:
                 performFirstCase();
+                break;
+            case 2:
+                performSecondCase();
+                break;
         }
     }
 
-    private static void performFirstCase (){
+    private static void performFirstCase() {
         if (faculties.getRealLength() == 0) {
             System.out.println("List of faculties is empty.\n" +
                     "Do you want to add one?[y/n]");
@@ -56,6 +60,7 @@ public class Academy {
                     addNewFaculty();
                     break;
                 case 2:
+                    //TODO. If there is no faculty with "old faculty's name", ask again
                     String oldName = DataInput.getString("Enter old faculty's name: ");
                     for (int i = 0; i < faculties.getRealLength(); i++) {
                         if (faculties.get(i).toString().equals(oldName)) {
@@ -66,6 +71,7 @@ public class Academy {
                     }
                     break;
                 case 3:
+                    //TODO. Same issue as in case 2
                     oldName = DataInput.getString("Enter old faculty's name: ");
                     for (int i = 0; i < faculties.getRealLength(); i++) {
                         if (faculties.get(i).toString().equals(oldName)) {
@@ -84,15 +90,29 @@ public class Academy {
         do {
             name = DataInput.getString();
             if (!Utility.lineContainsOnlyLetters(name)) System.out.println("Incorrect value. Enter again: ");
-            else if (!facNameIsUnique(name)) System.out.println("There is a faculty with the same name. Create a unique one.");
+            else if (!facNameIsUnique(name))
+                System.out.println("There is a faculty with the same name. Create a unique one.");
         } while (!(Utility.lineContainsOnlyLetters(name) && facNameIsUnique(name)));
         faculties.add(new Faculty(name));
     }
 
-    private static boolean facNameIsUnique(String name){
-        for(int i = 0; i < faculties.getRealLength(); i++){
-            if(faculties.get(i).toString().equals(name)) return false;
+    private static boolean facNameIsUnique(String name) {
+        for (int i = 0; i < faculties.getRealLength(); i++) {
+            if (faculties.get(i).toString().equals(name)) return false;
         }
         return true;
+    }
+
+    private static void performSecondCase() {
+        if (faculties.getRealLength() == 0)
+            System.out.println("List of faculties is empty.\n" +
+                    "Before adding/editing/deleting department you need to create at least one faculty.");
+        else {
+            System.out.println("Choose faculty whose department you want to add/edit/delete.\n" +
+                    "List of faculties:");
+            for (int i = 0; i < faculties.getRealLength(); i++) System.out.println(faculties.get(i));
+            //TODO. Add numeration to displaying list. Then ask num of faculty user want to add/edit/delete.
+            //TODO. Create var <Faculty> where we gonna store  chosen one. Make switch for actions with departments.
+        }
     }
 }
