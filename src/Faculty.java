@@ -30,6 +30,10 @@ public class Faculty {
         return departments;
     }
 
+    public DynamicArray getSpecialities() {
+        return specialities;
+    }
+
     @Override
     public String toString() {
         return (name);
