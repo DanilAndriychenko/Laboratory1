@@ -1,15 +1,27 @@
 public class Student {
 
-    String name;
-    Faculty faculty;
-    Speciality speciality;
-    int course;
+    private String name;
+    private Faculty faculty;
+    private Speciality speciality;
+    private int course;
 
     Student(String name, Faculty faculty, Speciality speciality, int course) {
         this.name = name;
         this.faculty = faculty;
         this.speciality = speciality;
         this.course = course;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public Speciality getSpeciality() {
+        return speciality;
+    }
+
+    public int getCourse() {
+        return course;
     }
 
     @Override

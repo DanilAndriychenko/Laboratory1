@@ -47,7 +47,13 @@ public class Academy {
                 break;
             case 3:
                 performThirdCase();
-
+                break;
+            case 7:
+                performSeventhCase();
+                break;
+            case 10:
+                performTenthCase();
+                break;
         }
     }
 
@@ -108,25 +114,6 @@ public class Academy {
                     return;
             }
         }
-    }
-
-    private void addNewFaculty() {
-        String name;
-        System.out.println("Enter the name of new faculty: ");
-        do {
-            name = DataInput.getString();
-            if (!Utility.lineContainsOnlyLetters(name)) System.out.println("Incorrect value. Enter again: ");
-            else if (!NameIsUniqueInDynamicArray(name, faculties))
-                System.out.println("There is a faculty with the same name. Create a unique one.");
-        } while (!(Utility.lineContainsOnlyLetters(name) && NameIsUniqueInDynamicArray(name, faculties)));
-        faculties.add(new Faculty(name));
-    }
-
-    private boolean NameIsUniqueInDynamicArray(String name, DynamicArray dynamicArray) {
-        for (int i = 0; i < dynamicArray.getRealLength(); i++) {
-            if (dynamicArray.get(i).toString().equals(name)) return false;
-        }
-        return true;
     }
 
     private void performSecondCase() {
@@ -210,19 +197,6 @@ public class Academy {
         }
     }
 
-    private void addNewDepartmentOnChosenFaculty (Faculty chosenFaculty) {
-        String name;
-        DynamicArray givenDepartments = chosenFaculty.getDepartments();
-        System.out.println("Enter the name of new department: ");
-        do {
-            name = DataInput.getString();
-            if (!Utility.lineContainsOnlyLetters(name)) System.out.println("Incorrect value. Enter again: ");
-            else if (!NameIsUniqueInDynamicArray(name, givenDepartments))
-                System.out.println("There is a department with the same name. Create a unique one.");
-        } while (!(Utility.lineContainsOnlyLetters(name) && NameIsUniqueInDynamicArray(name, givenDepartments)));
-        givenDepartments.add(new Department(name, chosenFaculty));
-    }
-
     private void performThirdCase() {
         if (faculties.getRealLength() == 0) {
             System.out.println("List of faculties is empty.\n" +
@@ -304,6 +278,112 @@ public class Academy {
         }
     }
 
+    private void performSeventhCase(){
+        String studFirstCourse = "", studSecondCourse = "", studThirdCourse = "", studFourthCourse = "";
+        for (int i=0; i<students.getRealLength(); i++){
+            switch (((Student) students.get(i)).getCourse()){
+                case 1:
+                    studFirstCourse+=(students.get(i) + "\n");
+                    break;
+                case 2:
+                    studSecondCourse+=(students.get(i) + "\n");
+                    break;
+                case 3:
+                    studThirdCourse+=(students.get(i) + "\n");
+                    break;
+                case 4:
+                    studFourthCourse+=(students.get(i) + "\n");
+            }
+        }
+        System.out.println(studFirstCourse + studSecondCourse + studThirdCourse + studFourthCourse);
+    }
+
+    private void performTenthCase(){
+        Faculty chosenFaculty;
+        Speciality chosenSpeciality;
+        if (faculties.getRealLength() == 0) {
+            System.out.println("List of faculties is empty.\n" +
+                    "Do you want to add one?[y/n]");
+            char yn = DataInput.getChar();
+            if (yn == 'y') addNewFaculty();
+            return;
+        }
+        else {
+            System.out.println("Choose faculty on which your speciality located.\n" +
+                    "List of faculties:");
+            for (int i = 0; i < faculties.getRealLength(); i++)
+                System.out.println("" + (i + 1) + ". " + faculties.get(i));
+            int chosenNumOfFaculty = Utility.nextActionNum(1, faculties.getRealLength()) - 1;
+            chosenFaculty = (Faculty) faculties.get(chosenNumOfFaculty);
+            if (chosenFaculty.getSpecialities().getRealLength() == 0) {
+                System.out.println("List of specialities on " + chosenFaculty + " is empty.\n" +
+                        "Do you want to add one?[y/n]");
+                char yn = DataInput.getChar();
+                if (yn == 'y') addNewSpecialityOnChosenFaculty(chosenFaculty);
+                return;
+            } else {
+                System.out.println("List of specialities:");
+                for (int i = 0; i < chosenFaculty.getSpecialities().getRealLength(); i++)
+                    System.out.println("" + (i + 1) + ". " + chosenFaculty.getSpecialities().get(i));
+                int chosenNumOfSpeciality = Utility.nextActionNum(1, chosenFaculty.getSpecialities().getRealLength()) - 1;
+                chosenSpeciality = (Speciality) chosenFaculty.getSpecialities().get(chosenNumOfSpeciality);
+            }
+        }
+        String studFirstCourseOnSpeciality = "", studSecondCourseOnSpeciality = "", studThirdCourseOnSpeciality = "",
+                studFourthCourseOnSpeciality = "";
+        for (int i=0; i<students.getRealLength(); i++){
+            if (((Student) students.get(i)).getFaculty()==chosenFaculty && ((Student) students.get(i)).getSpeciality()==chosenSpeciality){
+                switch (((Student) students.get(i)).getCourse()){
+                    case 1:
+                        studFirstCourseOnSpeciality+=(students.get(i) + "\n");
+                        break;
+                    case 2:
+                        studSecondCourseOnSpeciality+=(students.get(i) + "\n");
+                        break;
+                    case 3:
+                        studThirdCourseOnSpeciality+=(students.get(i) + "\n");
+                        break;
+                    case 4:
+                        studFourthCourseOnSpeciality+=(students.get(i) + "\n");
+                }
+            }
+
+        }
+        System.out.println(studFirstCourseOnSpeciality + studSecondCourseOnSpeciality + studThirdCourseOnSpeciality + studFourthCourseOnSpeciality);
+    }
+
+    private void addNewFaculty() {
+        String name;
+        System.out.println("Enter the name of new faculty: ");
+        do {
+            name = DataInput.getString();
+            if (!Utility.lineContainsOnlyLetters(name)) System.out.println("Incorrect value. Enter again: ");
+            else if (!NameIsUniqueInDynamicArray(name, faculties))
+                System.out.println("There is a faculty with the same name. Create a unique one.");
+        } while (!(Utility.lineContainsOnlyLetters(name) && NameIsUniqueInDynamicArray(name, faculties)));
+        faculties.add(new Faculty(name));
+    }
+
+    private boolean NameIsUniqueInDynamicArray(String name, DynamicArray dynamicArray) {
+        for (int i = 0; i < dynamicArray.getRealLength(); i++) {
+            if (dynamicArray.get(i).toString().equals(name)) return false;
+        }
+        return true;
+    }
+
+    private void addNewDepartmentOnChosenFaculty (Faculty chosenFaculty) {
+        String name;
+        DynamicArray givenDepartments = chosenFaculty.getDepartments();
+        System.out.println("Enter the name of new department: ");
+        do {
+            name = DataInput.getString();
+            if (!Utility.lineContainsOnlyLetters(name)) System.out.println("Incorrect value. Enter again: ");
+            else if (!NameIsUniqueInDynamicArray(name, givenDepartments))
+                System.out.println("There is a department with the same name. Create a unique one.");
+        } while (!(Utility.lineContainsOnlyLetters(name) && NameIsUniqueInDynamicArray(name, givenDepartments)));
+        givenDepartments.add(new Department(name, chosenFaculty));
+    }
+
     private void addNewSpecialityOnChosenFaculty (Faculty chosenFaculty) {
         String name;
         DynamicArray givenSpecialities = chosenFaculty.getSpecialities();
@@ -316,4 +396,5 @@ public class Academy {
         } while (!(Utility.lineContainsOnlyLetters(name) && NameIsUniqueInDynamicArray(name, givenSpecialities)));
         givenSpecialities.add(new Department(name, chosenFaculty));
     }
+
 }
