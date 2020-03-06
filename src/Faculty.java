@@ -10,6 +10,21 @@ public class Faculty {
         departments = new DynamicArray();
     }
 
+    public DynamicArray getSpecialities(){
+        return specialities;
+    }
+
+    public Speciality getSpeciality(int n){
+        if (n > specialities.getRealLength())
+            return null;
+        else
+            return (Speciality)specialities.get(n);
+    }
+
+    public void addSpeciality(Speciality speciality){
+        specialities.add(speciality);
+    }
+
     public String getName() {
         return name;
     }
@@ -28,10 +43,6 @@ public class Faculty {
 
     public DynamicArray getDepartments() {
         return departments;
-    }
-
-    public DynamicArray getSpecialities() {
-        return specialities;
     }
 
     @Override

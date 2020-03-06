@@ -2,20 +2,23 @@ import java.util.concurrent.TimeUnit;
 
 public class Academy {
 
-    private static DynamicArray faculties, students;
+    private static DynamicArray faculties, students, tutors;
 
     public static void main(String[] args) {
 
+        Academy academy = new Academy();
+
         faculties = new DynamicArray();
         students = new DynamicArray();
+        tutors = new DynamicArray();
 
         while (true) {
-            performAction(askForAction());
+            academy.performAction(academy.askForAction());
         }
 
     }
 
-    private static int askForAction() {
+    private int askForAction() {
         System.out.println("Please, choose action from the list below:\n" +
                 "1. Add/edit/delete faculty;\n" +
                 "2. Add/edit/delete department on some faculty;\n" +
@@ -34,7 +37,7 @@ public class Academy {
         return Utility.nextActionNum(1, 14);
     }
 
-    private static void performAction(int action) {
+    private void performAction(int action) {
         switch (action) {
             case 1:
                 performFirstCase();
@@ -44,10 +47,11 @@ public class Academy {
                 break;
             case 3:
                 performThirdCase();
+
         }
     }
 
-    private static void performFirstCase() {
+    private void performFirstCase() {
         if (faculties.getRealLength() == 0) {
             System.out.println("List of faculties is empty.\n" +
                     "Do you want to add one?[y/n]");
@@ -106,7 +110,7 @@ public class Academy {
         }
     }
 
-    private static void addNewFaculty() {
+    private void addNewFaculty() {
         String name;
         System.out.println("Enter the name of new faculty: ");
         do {
@@ -118,14 +122,14 @@ public class Academy {
         faculties.add(new Faculty(name));
     }
 
-    private static boolean NameIsUniqueInDynamicArray(String name, DynamicArray dynamicArray) {
+    private boolean NameIsUniqueInDynamicArray(String name, DynamicArray dynamicArray) {
         for (int i = 0; i < dynamicArray.getRealLength(); i++) {
             if (dynamicArray.get(i).toString().equals(name)) return false;
         }
         return true;
     }
 
-    private static void performSecondCase() {
+    private void performSecondCase() {
         if (faculties.getRealLength() == 0) {
             System.out.println("List of faculties is empty.\n" +
                     "Before adding/editing/deleting department you need to create at least one faculty.\n");
@@ -206,7 +210,7 @@ public class Academy {
         }
     }
 
-    private static void addNewDepartmentOnChosenFaculty (Faculty chosenFaculty) {
+    private void addNewDepartmentOnChosenFaculty (Faculty chosenFaculty) {
         String name;
         DynamicArray givenDepartments = chosenFaculty.getDepartments();
         System.out.println("Enter the name of new department: ");
@@ -219,7 +223,7 @@ public class Academy {
         givenDepartments.add(new Department(name, chosenFaculty));
     }
 
-    private static void performThirdCase() {
+    private void performThirdCase() {
         if (faculties.getRealLength() == 0) {
             System.out.println("List of faculties is empty.\n" +
                     "Before adding/editing/deleting speciality you need to create at least one faculty.\n");
@@ -300,7 +304,7 @@ public class Academy {
         }
     }
 
-    private static void addNewSpecialityOnChosenFaculty (Faculty chosenFaculty) {
+    private void addNewSpecialityOnChosenFaculty (Faculty chosenFaculty) {
         String name;
         DynamicArray givenSpecialities = chosenFaculty.getSpecialities();
         System.out.println("Enter the name of new speciality: ");
