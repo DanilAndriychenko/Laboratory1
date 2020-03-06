@@ -52,11 +52,13 @@ public final class DataInput {
     public static String getString() {
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);
-        String s = null;
+        String s = "";
         try {
             s = br.readLine();
         } catch (IOException e) {
             System.out.println("Line wasn't found.");
+        } catch (NumberFormatException e){
+            System.out.println("Line is empty.");
         } catch (IllegalArgumentException e){
             System.out.println("Line is empty.");
         }

@@ -2,7 +2,7 @@ public class Utility {
 
     public static boolean numberInGivenRange(String n, int a, int b) {
         for (int i = 0; i < n.length(); i++) if (!Character.isDigit(n.charAt(i))) return false;
-        if (Integer.parseInt(n) < a || Integer.parseInt(n) > b) return false;
+        if (!(n.equals("")) && (Integer.parseInt(n) < a || Integer.parseInt(n) > b)) return false;
         return true;
     }
 
@@ -28,8 +28,8 @@ public class Utility {
         String action = "";
         do {
             action = DataInput.getString();
-            if (!Utility.numberInGivenRange(action, a, b)) System.out.println("Incorrect value. Enter again: ");
-        } while (!Utility.numberInGivenRange(action, a, b));
+            if (!Utility.numberInGivenRange(action, a, b) || (action.equals(""))) System.out.println("Incorrect value. Enter again: ");
+        } while (!Utility.numberInGivenRange(action, a, b) || (action.equals("")));
         return Integer.parseInt(action);
     }
 }
