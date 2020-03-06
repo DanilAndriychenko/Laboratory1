@@ -62,7 +62,6 @@ public class Academy {
                     addNewFaculty();
                     break;
                 case 2:
-                    //TODO. If there is no faculty with "old faculty's name", ask again
                     String oldName = DataInput.getString("Enter old faculty's name: ");
                     for (int i = 0; i < faculties.getRealLength(); i++) {
                         if (faculties.get(i).toString().equals(oldName)) {
