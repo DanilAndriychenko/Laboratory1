@@ -80,12 +80,19 @@ public class Academy {
                     }
                     break;
                 case 3:
-                    //TODO. Same issue as in case 2
                     oldName = DataInput.getString("Enter old faculty's name: ");
                     for (int i = 0; i < faculties.getRealLength(); i++) {
                         if (faculties.get(i).toString().equals(oldName)) {
                             faculties.delete(i);
                             break;
+                        }
+                        if (i == faculties.getRealLength() - 1) {
+                            System.out.println("You have input incorrect name. Changes cannot be done.");
+                            try {
+                                TimeUnit.SECONDS.sleep(3);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                     break;
