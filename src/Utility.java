@@ -24,7 +24,7 @@ public class Utility {
         return true;
     }
 
-    public static int actionNum(int a, int b){
+    public static int nextActionNum(int a, int b){
         String action = "";
         do {
             action = DataInput.getString();

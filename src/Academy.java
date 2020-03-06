@@ -7,8 +7,6 @@ public class Academy {
         faculties = new DynamicArray();
         students = new DynamicArray();
 
-        //addNewFaculty();
-
         while (true) {
             performAction(askForAction());
         }
@@ -30,49 +28,53 @@ public class Academy {
                 "11. Display all tutors on some department sorted by full name;\n" +
                 "12. Display all students on some speciality and course;\n" +
                 "13. Display all students on some speciality and course sorted by full name;");
-        return Utility.actionNum(1, 13);
+        return Utility.nextActionNum(1, 13);
     }
 
     private static void performAction(int action) {
         switch (action) {
             case 1:
-                if (faculties.getRealLength() == 0) {
-                    System.out.println("List of faculties is empty.\n" +
-                            "Do you want to add one?[y/n]");
-                    char yn = DataInput.getChar();
-                    if (yn == 'y') addNewFaculty();
-                } else {
-                    System.out.println("List of faculties:");
-                    for (int i = 0; i < faculties.getRealLength(); i++) System.out.println(faculties.get(i));
-                    System.out.println("Choose an action:\n" +
-                            "1. Add new faculty; \n" +
-                            "2. Edit a faculty's name; \n" +
-                            "3. Delete a faculty;");
-                    switch (Utility.actionNum(1, 3)) {
-                        case 1:
+                performFirstCase();
+        }
+    }
+
+    private static void performFirstCase (){
+        if (faculties.getRealLength() == 0) {
+            System.out.println("List of faculties is empty.\n" +
+                    "Do you want to add one?[y/n]");
+            char yn = DataInput.getChar();
+            if (yn == 'y') addNewFaculty();
+        } else {
+            System.out.println("List of faculties:");
+            for (int i = 0; i < faculties.getRealLength(); i++) System.out.println(faculties.get(i));
+            System.out.println("Choose an action:\n" +
+                    "1. Add new faculty; \n" +
+                    "2. Edit a faculty's name; \n" +
+                    "3. Delete a faculty;");
+            switch (Utility.nextActionNum(1, 3)) {
+                case 1:
+                    addNewFaculty();
+                    break;
+                case 2:
+                    String oldName = DataInput.getString("Enter old faculty's name: ");
+                    for (int i = 0; i < faculties.getRealLength(); i++) {
+                        if (faculties.get(i).toString().equals(oldName)) {
+                            faculties.delete(i);
                             addNewFaculty();
                             break;
-                        case 2:
-                            String oldName = DataInput.getString("Enter old faculty's name: ");
-                            for (int i = 0; i < faculties.getRealLength(); i++) {
-                                if (faculties.get(i).toString().equals(oldName)) {
-                                    faculties.delete(i);
-                                    addNewFaculty();
-                                    break;
-                                }
-                            }
-                            break;
-                        case 3:
-                            oldName = DataInput.getString("Enter old faculty's name: ");
-                            for (int i = 0; i < faculties.getRealLength(); i++) {
-                                if (faculties.get(i).toString().equals(oldName)) {
-                                    faculties.delete(i);
-                                    break;
-                                }
-                            }
-                            break;
+                        }
                     }
-                }
+                    break;
+                case 3:
+                    oldName = DataInput.getString("Enter old faculty's name: ");
+                    for (int i = 0; i < faculties.getRealLength(); i++) {
+                        if (faculties.get(i).toString().equals(oldName)) {
+                            faculties.delete(i);
+                            break;
+                        }
+                    }
+                    break;
+            }
         }
     }
 
