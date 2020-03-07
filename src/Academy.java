@@ -34,7 +34,7 @@ public class Academy {
                 "12. Display all tutors on some department sorted by full name;\n" +
                 "13. Display all students on some speciality and course;\n" +
                 "14. Display all students on some speciality and course sorted by full name;");
-        return Utility.nextActionNum(1, 14);
+        return Utility.readNumInGivenRange(1, 14);
     }
 
     private void performAction(int action) {
@@ -47,6 +47,9 @@ public class Academy {
                 break;
             case 3:
                 performThirdCase();
+                break;
+            case 4:
+                performFourthCase();
                 break;
             case 7:
                 performSeventhCase();
@@ -71,7 +74,7 @@ public class Academy {
                     "2. Edit a faculty's name; \n" +
                     "3. Delete a faculty;\n" +
                     "4. Back to the previous menu;");
-            switch (Utility.nextActionNum(1, 4)) {
+            switch (Utility.readNumInGivenRange(1, 4)) {
                 case 1:
                     addNewFaculty();
                     break;
@@ -109,9 +112,6 @@ public class Academy {
                             }
                         }
                     }
-                    break;
-                case 4:
-                    return;
             }
         }
     }
@@ -125,12 +125,12 @@ public class Academy {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             System.out.println("Choose faculty which department you want to add/edit/delete.\n" +
                     "List of faculties:");
-            for (int i = 0; i < faculties.getRealLength(); i++) System.out.println("" + (i+1) + ". " + faculties.get(i));
-            int chosenNumOfFaculty = Utility.nextActionNum(1, faculties.getRealLength()) - 1;
+            for (int i = 0; i < faculties.getRealLength(); i++)
+                System.out.println("" + (i + 1) + ". " + faculties.get(i));
+            int chosenNumOfFaculty = Utility.readNumInGivenRange(1, faculties.getRealLength()) - 1;
             Faculty chosenFaculty = (Faculty) faculties.get(chosenNumOfFaculty);
             if (chosenFaculty.getDepartments().getRealLength() == 0) {
                 System.out.println("List of departments on " + chosenFaculty + " is empty.\n" +
@@ -140,17 +140,17 @@ public class Academy {
                     addNewDepartmentOnChosenFaculty(chosenFaculty);
                     return;
                 }
-            }
-            else {
+            } else {
                 System.out.println("List of departments:");
-                for (int i = 0; i < chosenFaculty.getDepartments().getRealLength(); i++) System.out.println(chosenFaculty.getDepartments().get(i));
+                for (int i = 0; i < chosenFaculty.getDepartments().getRealLength(); i++)
+                    System.out.println(chosenFaculty.getDepartments().get(i));
             }
             System.out.println("Choose an action:\n" +
                     "1. Add new department; \n" +
                     "2. Edit a department's name; \n" +
                     "3. Delete a department;\n" +
                     "4. Back to the previous menu;");
-            switch (Utility.nextActionNum(1, 4)) {
+            switch (Utility.readNumInGivenRange(1, 4)) {
                 case 1:
                     addNewDepartmentOnChosenFaculty(chosenFaculty);
                     break;
@@ -190,9 +190,6 @@ public class Academy {
                             }
                         }
                     }
-                    break;
-                case 4:
-                    return;
             }
         }
     }
@@ -206,12 +203,12 @@ public class Academy {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             System.out.println("Choose faculty which speciality you want to add/edit/delete.\n" +
                     "List of faculties:");
-            for (int i = 0; i < faculties.getRealLength(); i++) System.out.println("" + (i+1) + ". " + faculties.get(i));
-            int chosenNumOfFaculty = Utility.nextActionNum(1, faculties.getRealLength()) - 1;
+            for (int i = 0; i < faculties.getRealLength(); i++)
+                System.out.println("" + (i + 1) + ". " + faculties.get(i));
+            int chosenNumOfFaculty = Utility.readNumInGivenRange(1, faculties.getRealLength()) - 1;
             Faculty chosenFaculty = (Faculty) faculties.get(chosenNumOfFaculty);
             if (chosenFaculty.getSpecialities().getRealLength() == 0) {
                 System.out.println("List of specialities on " + chosenFaculty + " is empty.\n" +
@@ -221,17 +218,17 @@ public class Academy {
                     addNewSpecialityOnChosenFaculty(chosenFaculty);
                     return;
                 }
-            }
-            else {
+            } else {
                 System.out.println("List of specialities:");
-                for (int i = 0; i < chosenFaculty.getSpecialities().getRealLength(); i++) System.out.println(chosenFaculty.getSpecialities().get(i));
+                for (int i = 0; i < chosenFaculty.getSpecialities().getRealLength(); i++)
+                    System.out.println(chosenFaculty.getSpecialities().get(i));
             }
             System.out.println("Choose an action:\n" +
                     "1. Add new speciality; \n" +
                     "2. Edit a speciality's name; \n" +
                     "3. Delete a speciality;\n" +
                     "4. Back to the previous menu;");
-            switch (Utility.nextActionNum(1, 4)) {
+            switch (Utility.readNumInGivenRange(1, 4)) {
                 case 1:
                     addNewSpecialityOnChosenFaculty(chosenFaculty);
                     break;
@@ -271,34 +268,123 @@ public class Academy {
                             }
                         }
                     }
-                    break;
-                case 4:
-                    return;
             }
         }
     }
 
-    private void performSeventhCase(){
+    private void performFourthCase() {
+        Faculty chosenFaculty;
+        Speciality chosenSpeciality;
+        if (faculties.getRealLength() == 0) {
+            System.out.println("List of faculties is empty.\n" +
+                    "Do you want to add one?[y/n]");
+            char yn = DataInput.getChar();
+            if (yn == 'y') {
+                addNewFaculty();
+                performFourthCase();
+            }
+        } else {
+            System.out.println("Choose faculty on which your speciality located.\n" +
+                    "List of faculties:");
+            for (int i = 0; i < faculties.getRealLength(); i++)
+                System.out.println("" + (i + 1) + ". " + faculties.get(i));
+            int chosenNumOfFaculty = Utility.readNumInGivenRange(1, faculties.getRealLength()) - 1;
+            chosenFaculty = (Faculty) faculties.get(chosenNumOfFaculty);
+            if (chosenFaculty.getSpecialities().getRealLength() == 0) {
+                System.out.println("List of specialities on " + chosenFaculty + " is empty.\n" +
+                        "Do you want to add one?[y/n]");
+                char yn = DataInput.getChar();
+                if (yn == 'y') {
+                    addNewSpecialityOnChosenFaculty(chosenFaculty);
+                    performFourthCase();
+                }
+            } else {
+                System.out.println("List of specialities:");
+                for (int i = 0; i < chosenFaculty.getSpecialities().getRealLength(); i++)
+                    System.out.println("" + (i + 1) + ". " + chosenFaculty.getSpecialities().get(i));
+                int chosenNumOfSpeciality = Utility.readNumInGivenRange(1, chosenFaculty.getSpecialities().getRealLength()) - 1;
+                chosenSpeciality = (Speciality) chosenFaculty.getSpecialities().get(chosenNumOfSpeciality);
+                if (chosenSpeciality.getStudents().getRealLength() == 0) {
+                    System.out.println("List of students on " + chosenSpeciality + " is empty.\n" +
+                            "Do you want to add one?[y/n]");
+                    char yn = DataInput.getChar();
+                    if (yn == 'y') {
+                        addNewStudentOnChosenSpeciality(chosenSpeciality);
+                    }
+                }else{
+                    System.out.println("Choose an action:\n" +
+                            "1. Add new student; \n" +
+                            "2. Edit a student; \n" +
+                            "3. Delete a student;\n" +
+                            "4. Back to the previous menu;");
+                    switch (Utility.readNumInGivenRange(1, 4)) {
+                        case 1:
+                            addNewStudentOnChosenSpeciality(chosenSpeciality);
+                            break;
+                        case 2:
+                            DynamicArray studentsOnChosenSpeciality = chosenSpeciality.getStudents();
+                            System.out.println("List of students:");
+                            for (int i = 0; i < studentsOnChosenSpeciality.getRealLength(); i++)
+                                System.out.println("" + (i + 1) + ". " + studentsOnChosenSpeciality.get(i));
+                            int chosenNumOfStudent = Utility.readNumInGivenRange(1, studentsOnChosenSpeciality.getRealLength()) - 1;
+                            Student chosenStudent = (Student) studentsOnChosenSpeciality.get(chosenNumOfStudent);
+                            System.out.print("Enter new student's full name(if you don't want to change it - enter space):");
+                            String newName = "";
+                            do{
+                                newName = DataInput.getString();
+                                if (newName.equalsIgnoreCase(" ")) {
+                                    newName = chosenStudent.getName();
+                                    break;
+                                }
+                                else if (!Utility.lineContainsOnlyLetters(newName))
+                                    System.out.print("\nName must contain only letters. Please, enter again:");
+                                else if (!nameIsUniqueInDynamicArray(newName, chosenSpeciality.getStudents()))
+                                    System.out.print("\nThe name is not unique. Please, enter again:");
+                            } while (!Utility.lineContainsOnlyLetters(newName) || !nameIsUniqueInDynamicArray(newName, chosenSpeciality.getStudents()));
+                            chosenStudent.setName(newName);
+
+                            System.out.print("Enter new student's course(if you don't want to change it - enter \"0\"):");
+                            int newCourse = Utility.readNumInGivenRange(0,4);
+                            if (newCourse!=0) chosenStudent.setCourse(newCourse);
+                            break;
+                        case 3:
+                            studentsOnChosenSpeciality = chosenSpeciality.getStudents();
+                            System.out.println("List of students:");
+                            for (int i = 0; i < studentsOnChosenSpeciality.getRealLength(); i++)
+                                System.out.println("" + (i + 1) + ". " + studentsOnChosenSpeciality.get(i));
+                            System.out.print("Choose the number of student you want to delete:");
+                            int numToDelete = Utility.readNumInGivenRange(1, studentsOnChosenSpeciality.getRealLength())-1;
+                            studentsOnChosenSpeciality.delete(numToDelete);
+                            students.delete(numToDelete);
+                    }
+                }
+            }
+        }
+    }
+
+    //TODO. Delay
+    private void performSeventhCase() {
         String studFirstCourse = "", studSecondCourse = "", studThirdCourse = "", studFourthCourse = "";
-        for (int i=0; i<students.getRealLength(); i++){
-            switch (((Student) students.get(i)).getCourse()){
+        for (int i = 0; i < students.getRealLength(); i++) {
+            switch (((Student) students.get(i)).getCourse()) {
                 case 1:
-                    studFirstCourse+=(students.get(i) + "\n");
+                    studFirstCourse += (students.get(i) + "\n");
                     break;
                 case 2:
-                    studSecondCourse+=(students.get(i) + "\n");
+                    studSecondCourse += (students.get(i) + "\n");
                     break;
                 case 3:
-                    studThirdCourse+=(students.get(i) + "\n");
+                    studThirdCourse += (students.get(i) + "\n");
                     break;
                 case 4:
-                    studFourthCourse+=(students.get(i) + "\n");
+                    studFourthCourse += (students.get(i) + "\n");
             }
         }
         System.out.println(studFirstCourse + studSecondCourse + studThirdCourse + studFourthCourse);
     }
 
-    private void performTenthCase(){
+    //TODO. Recursive, delay
+    private void performTenthCase() {
         Faculty chosenFaculty;
         Speciality chosenSpeciality;
         if (faculties.getRealLength() == 0) {
@@ -307,13 +393,12 @@ public class Academy {
             char yn = DataInput.getChar();
             if (yn == 'y') addNewFaculty();
             return;
-        }
-        else {
+        } else {
             System.out.println("Choose faculty on which your speciality located.\n" +
                     "List of faculties:");
             for (int i = 0; i < faculties.getRealLength(); i++)
                 System.out.println("" + (i + 1) + ". " + faculties.get(i));
-            int chosenNumOfFaculty = Utility.nextActionNum(1, faculties.getRealLength()) - 1;
+            int chosenNumOfFaculty = Utility.readNumInGivenRange(1, faculties.getRealLength()) - 1;
             chosenFaculty = (Faculty) faculties.get(chosenNumOfFaculty);
             if (chosenFaculty.getSpecialities().getRealLength() == 0) {
                 System.out.println("List of specialities on " + chosenFaculty + " is empty.\n" +
@@ -325,26 +410,26 @@ public class Academy {
                 System.out.println("List of specialities:");
                 for (int i = 0; i < chosenFaculty.getSpecialities().getRealLength(); i++)
                     System.out.println("" + (i + 1) + ". " + chosenFaculty.getSpecialities().get(i));
-                int chosenNumOfSpeciality = Utility.nextActionNum(1, chosenFaculty.getSpecialities().getRealLength()) - 1;
+                int chosenNumOfSpeciality = Utility.readNumInGivenRange(1, chosenFaculty.getSpecialities().getRealLength()) - 1;
                 chosenSpeciality = (Speciality) chosenFaculty.getSpecialities().get(chosenNumOfSpeciality);
             }
         }
         String studFirstCourseOnSpeciality = "", studSecondCourseOnSpeciality = "", studThirdCourseOnSpeciality = "",
                 studFourthCourseOnSpeciality = "";
-        for (int i=0; i<students.getRealLength(); i++){
-            if (((Student) students.get(i)).getFaculty()==chosenFaculty && ((Student) students.get(i)).getSpeciality()==chosenSpeciality){
-                switch (((Student) students.get(i)).getCourse()){
+        for (int i = 0; i < students.getRealLength(); i++) {
+            if (((Student) students.get(i)).getFaculty() == chosenFaculty && ((Student) students.get(i)).getSpeciality() == chosenSpeciality) {
+                switch (((Student) students.get(i)).getCourse()) {
                     case 1:
-                        studFirstCourseOnSpeciality+=(students.get(i) + "\n");
+                        studFirstCourseOnSpeciality += (students.get(i) + "\n");
                         break;
                     case 2:
-                        studSecondCourseOnSpeciality+=(students.get(i) + "\n");
+                        studSecondCourseOnSpeciality += (students.get(i) + "\n");
                         break;
                     case 3:
-                        studThirdCourseOnSpeciality+=(students.get(i) + "\n");
+                        studThirdCourseOnSpeciality += (students.get(i) + "\n");
                         break;
                     case 4:
-                        studFourthCourseOnSpeciality+=(students.get(i) + "\n");
+                        studFourthCourseOnSpeciality += (students.get(i) + "\n");
                 }
             }
 
@@ -358,43 +443,59 @@ public class Academy {
         do {
             name = DataInput.getString();
             if (!Utility.lineContainsOnlyLetters(name)) System.out.println("Incorrect value. Enter again: ");
-            else if (!NameIsUniqueInDynamicArray(name, faculties))
+            else if (!nameIsUniqueInDynamicArray(name, faculties))
                 System.out.println("There is a faculty with the same name. Create a unique one.");
-        } while (!(Utility.lineContainsOnlyLetters(name) && NameIsUniqueInDynamicArray(name, faculties)));
+        } while (!(Utility.lineContainsOnlyLetters(name) && nameIsUniqueInDynamicArray(name, faculties)));
         faculties.add(new Faculty(name));
     }
 
-    private boolean NameIsUniqueInDynamicArray(String name, DynamicArray dynamicArray) {
+    private boolean nameIsUniqueInDynamicArray(String name, DynamicArray dynamicArray) {
         for (int i = 0; i < dynamicArray.getRealLength(); i++) {
             if (dynamicArray.get(i).toString().equals(name)) return false;
         }
         return true;
     }
 
-    private void addNewDepartmentOnChosenFaculty (Faculty chosenFaculty) {
+    private void addNewDepartmentOnChosenFaculty(Faculty chosenFaculty) {
         String name;
         DynamicArray givenDepartments = chosenFaculty.getDepartments();
         System.out.println("Enter the name of new department: ");
         do {
             name = DataInput.getString();
             if (!Utility.lineContainsOnlyLetters(name)) System.out.println("Incorrect value. Enter again: ");
-            else if (!NameIsUniqueInDynamicArray(name, givenDepartments))
+            else if (!nameIsUniqueInDynamicArray(name, givenDepartments))
                 System.out.println("There is a department with the same name. Create a unique one.");
-        } while (!(Utility.lineContainsOnlyLetters(name) && NameIsUniqueInDynamicArray(name, givenDepartments)));
+        } while (!(Utility.lineContainsOnlyLetters(name) && nameIsUniqueInDynamicArray(name, givenDepartments)));
         givenDepartments.add(new Department(name, chosenFaculty));
     }
 
-    private void addNewSpecialityOnChosenFaculty (Faculty chosenFaculty) {
+    private void addNewSpecialityOnChosenFaculty(Faculty chosenFaculty) {
         String name;
         DynamicArray givenSpecialities = chosenFaculty.getSpecialities();
         System.out.println("Enter the name of new speciality: ");
         do {
             name = DataInput.getString();
             if (!Utility.lineContainsOnlyLetters(name)) System.out.println("Incorrect value. Enter again: ");
-            else if (!NameIsUniqueInDynamicArray(name, givenSpecialities))
+            else if (!nameIsUniqueInDynamicArray(name, givenSpecialities))
                 System.out.println("There is a speciality with the same name. Create a unique one.");
-        } while (!(Utility.lineContainsOnlyLetters(name) && NameIsUniqueInDynamicArray(name, givenSpecialities)));
-        givenSpecialities.add(new Department(name, chosenFaculty));
+        } while (!(Utility.lineContainsOnlyLetters(name) && nameIsUniqueInDynamicArray(name, givenSpecialities)));
+        givenSpecialities.add(new Speciality(name, chosenFaculty));
     }
 
+    private void addNewStudentOnChosenSpeciality(Speciality chosenSpeciality){
+        System.out.print("Enter student's full name:");
+        String fullName = "";
+        do{
+            fullName = DataInput.getString();
+            if (!Utility.lineContainsOnlyLetters(fullName))
+                System.out.print("\nName must contain only letters. Please, enter again:");
+            else if (!nameIsUniqueInDynamicArray(fullName, chosenSpeciality.getStudents()))
+                System.out.print("\nThe name is not unique. Please, enter again:");
+        } while (!Utility.lineContainsOnlyLetters(fullName) || !nameIsUniqueInDynamicArray(fullName, chosenSpeciality.getStudents()));
+        System.out.print("Enter student's course:");
+        int course = Utility.readNumInGivenRange(1,4);
+        Student newStudent = new Student(fullName, chosenSpeciality.getFaculty(), chosenSpeciality, course);
+        students.add(newStudent);
+        chosenSpeciality.addStudent(newStudent);
+    }
 }

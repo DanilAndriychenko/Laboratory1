@@ -12,16 +12,28 @@ public class Student {
         this.course = course;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCourse(int course) {
+        this.course = course;
+    }
+
+    public int getCourse() {
+        return course;
+    }
+
     public Faculty getFaculty() {
         return faculty;
     }
 
     public Speciality getSpeciality() {
         return speciality;
-    }
-
-    public int getCourse() {
-        return course;
     }
 
     @Override

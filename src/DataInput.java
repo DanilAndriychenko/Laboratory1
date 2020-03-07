@@ -10,7 +10,7 @@ public final class DataInput {
         return value;
     }
 
-    public static char getChar() throws NullPointerException, StringIndexOutOfBoundsException{
+    public static char getChar() throws NullPointerException, StringIndexOutOfBoundsException {
         String s = getString();
         return ((!s.equals("")) ? s.charAt(0) : ' ');
     }
@@ -57,9 +57,9 @@ public final class DataInput {
             s = br.readLine();
         } catch (IOException e) {
             System.out.println("Line wasn't found.");
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Line is empty.");
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println("Line is empty.");
         }
         return s;
