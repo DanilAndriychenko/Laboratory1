@@ -57,9 +57,26 @@ public class Academy {
             case 7:
                 performSeventhCase();
                 break;
+            case 8:
+                performEightCase();
+                break;
+            case 9:
+                performNinthCase();
+                break;
             case 10:
                 performTenthCase();
                 break;
+            case 11:
+                performEleventhCase();
+                break;
+            case 12:
+                performTwelvesCase();
+                break;
+            case 13:
+                performThirteenthCase();
+                break;
+            case 14:
+                performFourteenthCase();
         }
     }
 
@@ -479,6 +496,58 @@ public class Academy {
         }
     }
 
+    private void performEightCase(){
+        Faculty chosenFaculty;
+        if (faculties.getRealLength() == 0) {
+            System.out.println("List of faculties is empty.\n" +
+                    "Do you want to add one?[y/n]");
+            char yn = DataInput.getChar();
+            if (yn == 'y') addNewFaculty();
+            performEightCase();
+        } else {
+            System.out.println("Students of what faculty you want to be displayed?\n" +
+                    "List of faculties:");
+            for (int i = 0; i < faculties.getRealLength(); i++)
+                System.out.println("" + (i + 1) + ". " + faculties.get(i));
+            int chosenNumOfFaculty = Utility.readNumInGivenRange(1, faculties.getRealLength()) - 1;
+            chosenFaculty = (Faculty) faculties.get(chosenNumOfFaculty);
+            sortStudOrTutInAlphabeticOrder(students);
+            for (int i=0; i<students.getRealLength(); i++) if (((Student) students.get(i)).getFaculty()==chosenFaculty)
+                System.out.println(students.get(i));
+        }
+        try {
+            TimeUnit.SECONDS.sleep(4);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void performNinthCase(){
+        Faculty chosenFaculty;
+        if (faculties.getRealLength() == 0) {
+            System.out.println("List of faculties is empty.\n" +
+                    "Do you want to add one?[y/n]");
+            char yn = DataInput.getChar();
+            if (yn == 'y') addNewFaculty();
+            performNinthCase();
+        } else {
+            System.out.println("Students of what faculty you want to be displayed?\n" +
+                    "List of faculties:");
+            for (int i = 0; i < faculties.getRealLength(); i++)
+                System.out.println("" + (i + 1) + ". " + faculties.get(i));
+            int chosenNumOfFaculty = Utility.readNumInGivenRange(1, faculties.getRealLength()) - 1;
+            chosenFaculty = (Faculty) faculties.get(chosenNumOfFaculty);
+            sortStudOrTutInAlphabeticOrder(tutors);
+            for (int i=0; i<tutors.getRealLength(); i++) if (((Tutor) tutors.get(i)).getFaculty()==chosenFaculty)
+                System.out.println(tutors.get(i));
+        }
+        try {
+            TimeUnit.SECONDS.sleep(4);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void performTenthCase() {
         Faculty chosenFaculty = null;
         Speciality chosenSpeciality = null;
@@ -536,6 +605,171 @@ public class Academy {
             TimeUnit.SECONDS.sleep(5);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void performEleventhCase(){
+        Faculty chosenFaculty;
+        Speciality chosenSpeciality;
+        if (faculties.getRealLength() == 0) {
+            System.out.println("List of faculties is empty.\n" +
+                    "Do you want to add one?[y/n]");
+            char yn = DataInput.getChar();
+            if (yn == 'y') addNewFaculty();
+            performEleventhCase();
+        } else {
+            System.out.println("Choose faculty on which your speciality located.\n" +
+                    "List of faculties:");
+            for (int i = 0; i < faculties.getRealLength(); i++)
+                System.out.println("" + (i + 1) + ". " + faculties.get(i));
+            int chosenNumOfFaculty = Utility.readNumInGivenRange(1, faculties.getRealLength()) - 1;
+            chosenFaculty = (Faculty) faculties.get(chosenNumOfFaculty);
+            if (chosenFaculty.getSpecialities().getRealLength() == 0) {
+                System.out.println("List of specialities on " + chosenFaculty + " is empty.\n" +
+                        "Do you want to add one?[y/n]");
+                char yn = DataInput.getChar();
+                if (yn == 'y') addNewSpecialityOnChosenFaculty(chosenFaculty);
+                performEleventhCase();
+            } else {
+                System.out.println("List of specialities:");
+                for (int i = 0; i < chosenFaculty.getSpecialities().getRealLength(); i++)
+                    System.out.println("" + (i + 1) + ". " + chosenFaculty.getSpecialities().get(i));
+                int chosenNumOfSpeciality = Utility.readNumInGivenRange(1, chosenFaculty.getSpecialities().getRealLength()) - 1;
+                chosenSpeciality = (Speciality) chosenFaculty.getSpecialities().get(chosenNumOfSpeciality);
+                sortStudOrTutInAlphabeticOrder(students);
+                for (int i=0; i<students.getRealLength(); i++) if (((Student) students.get(i)).getSpeciality()==chosenSpeciality)
+                    System.out.println(students.get(i));
+                try {
+                    TimeUnit.SECONDS.sleep(4);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void performTwelvesCase(){
+        Faculty chosenFaculty;
+        Department chosenDepartment;
+        if (faculties.getRealLength() == 0) {
+            System.out.println("List of faculties is empty.\n" +
+                    "Do you want to add one?[y/n]");
+            char yn = DataInput.getChar();
+            if (yn == 'y') addNewFaculty();
+            performEleventhCase();
+        } else {
+            System.out.println("Choose faculty on which your department located.\n" +
+                    "List of faculties:");
+            for (int i = 0; i < faculties.getRealLength(); i++)
+                System.out.println("" + (i + 1) + ". " + faculties.get(i));
+            int chosenNumOfFaculty = Utility.readNumInGivenRange(1, faculties.getRealLength()) - 1;
+            chosenFaculty = (Faculty) faculties.get(chosenNumOfFaculty);
+            if (chosenFaculty.getDepartments().getRealLength() == 0) {
+                System.out.println("List of departments on " + chosenFaculty + " is empty.\n" +
+                        "Do you want to add one?[y/n]");
+                char yn = DataInput.getChar();
+                if (yn == 'y') addNewDepartmentOnChosenFaculty(chosenFaculty);
+                performTwelvesCase();
+            } else {
+                System.out.println("List of departments:");
+                for (int i = 0; i < chosenFaculty.getDepartments().getRealLength(); i++)
+                    System.out.println("" + (i + 1) + ". " + chosenFaculty.getDepartments().get(i));
+                int chosenNumOfDepartment = Utility.readNumInGivenRange(1, chosenFaculty.getDepartments().getRealLength()) - 1;
+                chosenDepartment = (Department) chosenFaculty.getDepartments().get(chosenNumOfDepartment);
+                sortStudOrTutInAlphabeticOrder(tutors);
+                for (int i=0; i<tutors.getRealLength(); i++) if (((Tutor) tutors.get(i)).getDepartment()==chosenDepartment)
+                    System.out.println(tutors.get(i));
+                try {
+                    TimeUnit.SECONDS.sleep(4);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void performThirteenthCase(){
+        Faculty chosenFaculty;
+        Speciality chosenSpeciality;
+        if (faculties.getRealLength() == 0) {
+            System.out.println("List of faculties is empty.\n" +
+                    "Do you want to add one?[y/n]");
+            char yn = DataInput.getChar();
+            if (yn == 'y') addNewFaculty();
+            performEleventhCase();
+        } else {
+            System.out.println("Choose faculty on which your speciality located.\n" +
+                    "List of faculties:");
+            for (int i = 0; i < faculties.getRealLength(); i++)
+                System.out.println("" + (i + 1) + ". " + faculties.get(i));
+            int chosenNumOfFaculty = Utility.readNumInGivenRange(1, faculties.getRealLength()) - 1;
+            chosenFaculty = (Faculty) faculties.get(chosenNumOfFaculty);
+            if (chosenFaculty.getSpecialities().getRealLength() == 0) {
+                System.out.println("List of specialities on " + chosenFaculty + " is empty.\n" +
+                        "Do you want to add one?[y/n]");
+                char yn = DataInput.getChar();
+                if (yn == 'y') addNewSpecialityOnChosenFaculty(chosenFaculty);
+                performEleventhCase();
+            } else {
+                System.out.println("List of specialities:");
+                for (int i = 0; i < chosenFaculty.getSpecialities().getRealLength(); i++)
+                    System.out.println("" + (i + 1) + ". " + chosenFaculty.getSpecialities().get(i));
+                int chosenNumOfSpeciality = Utility.readNumInGivenRange(1, chosenFaculty.getSpecialities().getRealLength()) - 1;
+                chosenSpeciality = (Speciality) chosenFaculty.getSpecialities().get(chosenNumOfSpeciality);
+                System.out.println("Enter course:");
+                int chosenCourse = Utility.readNumInGivenRange(1,4);
+                for (int i=0; i<students.getRealLength(); i++)
+                    if (((Student) students.get(i)).getSpeciality()==chosenSpeciality && ((Student) students.get(i)).getCourse()==chosenCourse)
+                        System.out.println(students.get(i));
+                try {
+                    TimeUnit.SECONDS.sleep(4);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void performFourteenthCase(){
+        Faculty chosenFaculty;
+        Speciality chosenSpeciality;
+        if (faculties.getRealLength() == 0) {
+            System.out.println("List of faculties is empty.\n" +
+                    "Do you want to add one?[y/n]");
+            char yn = DataInput.getChar();
+            if (yn == 'y') addNewFaculty();
+            performEleventhCase();
+        } else {
+            System.out.println("Choose faculty on which your speciality located.\n" +
+                    "List of faculties:");
+            for (int i = 0; i < faculties.getRealLength(); i++)
+                System.out.println("" + (i + 1) + ". " + faculties.get(i));
+            int chosenNumOfFaculty = Utility.readNumInGivenRange(1, faculties.getRealLength()) - 1;
+            chosenFaculty = (Faculty) faculties.get(chosenNumOfFaculty);
+            if (chosenFaculty.getSpecialities().getRealLength() == 0) {
+                System.out.println("List of specialities on " + chosenFaculty + " is empty.\n" +
+                        "Do you want to add one?[y/n]");
+                char yn = DataInput.getChar();
+                if (yn == 'y') addNewSpecialityOnChosenFaculty(chosenFaculty);
+                performEleventhCase();
+            } else {
+                System.out.println("List of specialities:");
+                for (int i = 0; i < chosenFaculty.getSpecialities().getRealLength(); i++)
+                    System.out.println("" + (i + 1) + ". " + chosenFaculty.getSpecialities().get(i));
+                int chosenNumOfSpeciality = Utility.readNumInGivenRange(1, chosenFaculty.getSpecialities().getRealLength()) - 1;
+                chosenSpeciality = (Speciality) chosenFaculty.getSpecialities().get(chosenNumOfSpeciality);
+                System.out.println("Enter course:");
+                int chosenCourse = Utility.readNumInGivenRange(1,4);
+                sortStudOrTutInAlphabeticOrder(students);
+                for (int i=0; i<students.getRealLength(); i++)
+                    if (((Student) students.get(i)).getSpeciality()==chosenSpeciality && ((Student) students.get(i)).getCourse()==chosenCourse)
+                        System.out.println(students.get(i));
+                try {
+                    TimeUnit.SECONDS.sleep(4);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -614,5 +848,26 @@ public class Academy {
         Student newStudent = new Student(fullName, chosenSpeciality.getFaculty(), chosenSpeciality, course);
         students.add(newStudent);
         chosenSpeciality.addStudent(newStudent);
+    }
+
+    private void sortStudOrTutInAlphabeticOrder(DynamicArray dynamicArray){
+        if (dynamicArray==students){
+            for (int i = 0; i < students.getRealLength(); i++) {
+                for (int j = i + 1; j < students.getRealLength(); j++) {
+                    if (((Student) students.get(i)).getName().compareTo(((Student) students.get(j)).getName()) > 0) {
+                        students.swap(i,j);
+                    }
+                }
+            }
+        }
+        else if (dynamicArray==tutors){
+            for (int i = 0; i < tutors.getRealLength(); i++) {
+                for (int j = i + 1; j < tutors.getRealLength(); j++) {
+                    if (((Student) tutors.get(i)).getName().compareTo(((Student) tutors.get(j)).getName()) > 0) {
+                        tutors.swap(i,j);
+                    }
+                }
+            }
+        }
     }
 }

@@ -60,6 +60,12 @@ public class DynamicArray {
         return null;
     }
 
+    public void swap(int i, int j){
+        Object temp=arr[i];
+        arr[i]=arr[j];
+        arr[j]=temp;
+    }
+
     public int getRealLength() {
         return realLength;
     }
