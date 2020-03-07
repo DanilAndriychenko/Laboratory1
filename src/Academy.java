@@ -12,9 +12,7 @@ public class Academy {
         students = new DynamicArray();
         tutors = new DynamicArray();
 
-        while (true) {
-            academy.performAction(academy.askForAction());
-        }
+        while (true) academy.performAction(academy.askForAction());
 
     }
 
@@ -53,6 +51,9 @@ public class Academy {
                 break;
             case 5:
                 performFifthCase();
+                break;
+            case 6:
+                performSixthCase();
                 break;
             case 7:
                 performSeventhCase();
@@ -331,7 +332,7 @@ public class Academy {
                     if (yn == 'y') {
                         addNewStudentOnChosenSpeciality(chosenSpeciality);
                     }
-                }else{
+                } else {
                     System.out.println("Choose an action:\n" +
                             "1. Add new student; \n" +
                             "2. Edit a student; \n" +
@@ -355,8 +356,7 @@ public class Academy {
                                 if (newName.equalsIgnoreCase(" ")) {
                                     newName = chosenStudent.getName();
                                     break;
-                                }
-                                else if (!Utility.lineContainsOnlyLetters(newName))
+                                } else if (!Utility.lineContainsOnlyLetters(newName))
                                     System.out.print("\nName must contain only letters. Please, enter again:");
                                 else if (!nameIsUniqueInDynamicArray(newName, chosenSpeciality.getStudents()))
                                     System.out.print("\nThe name is not unique. Please, enter again:");
@@ -364,8 +364,8 @@ public class Academy {
                             chosenStudent.setName(newName);
 
                             System.out.print("Enter new student's course(if you don't want to change it - enter \"0\"):");
-                            int newCourse = Utility.readNumInGivenRange(0,4);
-                            if (newCourse!=0) chosenStudent.setCourse(newCourse);
+                            int newCourse = Utility.readNumInGivenRange(0, 4);
+                            if (newCourse != 0) chosenStudent.setCourse(newCourse);
                             break;
                         case 3:
                             studentsOnChosenSpeciality = chosenSpeciality.getStudents();
@@ -373,7 +373,7 @@ public class Academy {
                             for (int i = 0; i < studentsOnChosenSpeciality.getRealLength(); i++)
                                 System.out.println("" + (i + 1) + ". " + studentsOnChosenSpeciality.get(i));
                             System.out.print("Choose the number of student you want to delete:");
-                            int numToDelete = Utility.readNumInGivenRange(1, studentsOnChosenSpeciality.getRealLength())-1;
+                            int numToDelete = Utility.readNumInGivenRange(1, studentsOnChosenSpeciality.getRealLength()) - 1;
                             studentsOnChosenSpeciality.delete(numToDelete);
                             students.delete(numToDelete);
                     }
@@ -421,7 +421,7 @@ public class Academy {
                     if (yn == 'y') {
                         addNewTutorOnChosenDepartment(chosenDepartment);
                     }
-                }else{
+                } else {
                     System.out.println("Choose an action:\n" +
                             "1. Add new tutor; \n" +
                             "2. Edit a tutor; \n" +
@@ -445,8 +445,7 @@ public class Academy {
                                 if (newName.equalsIgnoreCase(" ")) {
                                     newName = chosenTutor.getName();
                                     break;
-                                }
-                                else if (!Utility.lineContainsOnlyLetters(newName))
+                                } else if (!Utility.lineContainsOnlyLetters(newName))
                                     System.out.print("\nName must contain only letters. Please, enter again:");
                                 else if (!nameIsUniqueInDynamicArray(newName, chosenDepartment.getTutors()))
                                     System.out.print("\nThe name is not unique. Please, enter again:");
@@ -459,13 +458,80 @@ public class Academy {
                             for (int i = 0; i < tutorsOnChosenDepartment.getRealLength(); i++)
                                 System.out.println("" + (i + 1) + ". " + tutorsOnChosenDepartment.get(i));
                             System.out.print("Choose the number of tutor you want to delete:");
-                            int numToDelete = Utility.readNumInGivenRange(1, tutorsOnChosenDepartment.getRealLength())-1;
+                            int numToDelete = Utility.readNumInGivenRange(1, tutorsOnChosenDepartment.getRealLength()) - 1;
                             tutorsOnChosenDepartment.delete(numToDelete);
                             tutors.delete(numToDelete);
                     }
                 }
             }
         }
+    }
+
+    private void performSixthCase() {
+        System.out.println("To find a student enter information that is known about him/her.");
+        System.out.println("Enter student`s name(if the name is unknown enter space)");
+        String name;
+        do {
+            name = DataInput.getString();
+            if (!Utility.lineContainsOnlyLetters(name)) System.out.println("Name can contain only letters");
+            if (name.equals(" ")) break;
+        } while (!Utility.lineContainsOnlyLetters(name));
+        System.out.println("Enter student`s course(if the course is unknown enter 0)");
+        int course = Utility.readNumInGivenRange(0, 4);
+        System.out.println("Enter student`s speciality(if it is unknown enter 0)");
+        int numOfSpec = 1;
+        for (int i = 0; i < faculties.getRealLength(); i++) {
+            for (int m = 0; m < ((Faculty) faculties.get(i)).getSpecialities().getRealLength(); m++) {
+                System.out.println(numOfSpec + ". " + ((Faculty) faculties.get(i)).getSpecialities().get(m));
+                numOfSpec++;
+            }
+        }
+        int numForS = 1;
+        int numForSpeciality = Utility.readNumInGivenRange(0, --numOfSpec) - 1;
+        Speciality speciality = null;
+        for (int i = 0; i < faculties.getRealLength(); i++) {
+            for (int m = 0; m < ((Faculty) faculties.get(i)).getSpecialities().getRealLength(); m++) {
+                if (numForS == numForSpeciality + 1) {
+                    numForS++;
+                    speciality = (Speciality) ((Faculty) faculties.get(i)).getSpecialities().get(m);
+                }
+            }
+        }
+
+
+        int numOfPrintedStudents = 0;
+        for (int i = 0; i < students.getRealLength(); i++) {
+            if (!(((Student) students.get(i)).getName().equals(name) || name.equals(" "))) continue;
+            if (!(((Student) students.get(i)).getCourse() == course || course == 0)) continue;
+            if (!(speciality == null || ((Student) students.get(i)).getSpeciality() == speciality)) continue;
+            System.out.println(students.get(i));
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            numOfPrintedStudents++;
+        }
+        if (numOfPrintedStudents == 0) {
+            System.out.print("Nothing was found");
+            if (students.getRealLength() != 0) {
+                try {
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        if (students.getRealLength() == 0) {
+            System.out.println(" because the list of students is empty.");
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else
+            System.out.print("\n");
     }
 
     private void performSeventhCase() {
@@ -496,7 +562,7 @@ public class Academy {
         }
     }
 
-    private void performEightCase(){
+    private void performEightCase() {
         Faculty chosenFaculty;
         if (faculties.getRealLength() == 0) {
             System.out.println("List of faculties is empty.\n" +
@@ -512,8 +578,9 @@ public class Academy {
             int chosenNumOfFaculty = Utility.readNumInGivenRange(1, faculties.getRealLength()) - 1;
             chosenFaculty = (Faculty) faculties.get(chosenNumOfFaculty);
             sortStudOrTutInAlphabeticOrder(students);
-            for (int i=0; i<students.getRealLength(); i++) if (((Student) students.get(i)).getFaculty()==chosenFaculty)
-                System.out.println(students.get(i));
+            for (int i = 0; i < students.getRealLength(); i++)
+                if (((Student) students.get(i)).getFaculty() == chosenFaculty)
+                    System.out.println(students.get(i));
         }
         try {
             TimeUnit.SECONDS.sleep(4);
@@ -522,7 +589,7 @@ public class Academy {
         }
     }
 
-    private void performNinthCase(){
+    private void performNinthCase() {
         Faculty chosenFaculty;
         if (faculties.getRealLength() == 0) {
             System.out.println("List of faculties is empty.\n" +
@@ -538,8 +605,9 @@ public class Academy {
             int chosenNumOfFaculty = Utility.readNumInGivenRange(1, faculties.getRealLength()) - 1;
             chosenFaculty = (Faculty) faculties.get(chosenNumOfFaculty);
             sortStudOrTutInAlphabeticOrder(tutors);
-            for (int i=0; i<tutors.getRealLength(); i++) if (((Tutor) tutors.get(i)).getFaculty()==chosenFaculty)
-                System.out.println(tutors.get(i));
+            for (int i = 0; i < tutors.getRealLength(); i++)
+                if (((Tutor) tutors.get(i)).getFaculty() == chosenFaculty)
+                    System.out.println(tutors.get(i));
         }
         try {
             TimeUnit.SECONDS.sleep(4);
@@ -569,7 +637,7 @@ public class Academy {
                         "Do you want to add one?[y/n]");
                 char yn = DataInput.getChar();
                 if (yn == 'y') addNewSpecialityOnChosenFaculty(chosenFaculty);
-               performTenthCase();
+                performTenthCase();
             } else {
                 System.out.println("List of specialities:");
                 for (int i = 0; i < chosenFaculty.getSpecialities().getRealLength(); i++)
@@ -833,10 +901,10 @@ public class Academy {
         givenSpecialities.add(new Speciality(name, chosenFaculty));
     }
 
-    private void addNewStudentOnChosenSpeciality(Speciality chosenSpeciality){
+    private void addNewStudentOnChosenSpeciality(Speciality chosenSpeciality) {
         System.out.print("Enter student's full name:");
         String fullName;
-        do{
+        do {
             fullName = DataInput.getString();
             if (!Utility.lineContainsOnlyLetters(fullName))
                 System.out.print("\nName must contain only letters. Please, enter again:");
@@ -844,7 +912,7 @@ public class Academy {
                 System.out.print("\nThe name is not unique. Please, enter again:");
         } while (!Utility.lineContainsOnlyLetters(fullName) || !nameIsUniqueInDynamicArray(fullName, chosenSpeciality.getStudents()));
         System.out.print("Enter student's course:");
-        int course = Utility.readNumInGivenRange(1,4);
+        int course = Utility.readNumInGivenRange(1, 4);
         Student newStudent = new Student(fullName, chosenSpeciality.getFaculty(), chosenSpeciality, course);
         students.add(newStudent);
         chosenSpeciality.addStudent(newStudent);

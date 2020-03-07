@@ -1,8 +1,8 @@
 public class Utility {
 
     public static boolean numberInGivenRange(String n, int a, int b) {
-        for (int i = 0; i < n.length(); i++) if (!Character.isDigit(n.charAt(i))) return false;
-        return n.equals("") || (Integer.parseInt(n) >= a && Integer.parseInt(n) <= b);
+        for (int i = 0; i < n.length(); i++) if (!Character.isDigit(n.charAt(i))) return true;
+        return !n.equals("") && (Integer.parseInt(n) < a || Integer.parseInt(n) > b);
     }
 
     public static boolean lineContainsOnlyLetters(String line) {
@@ -28,23 +28,9 @@ public class Utility {
         String action;
         do {
             action = DataInput.getString();
-            if (!Utility.numberInGivenRange(action, a, b) || (action.equals("")))
+            if (Utility.numberInGivenRange(action, a, b) || (action.equals("")))
                 System.out.println("Incorrect value. Enter again: ");
-        } while (!Utility.numberInGivenRange(action, a, b) || (action.equals("")));
+        } while (Utility.numberInGivenRange(action, a, b) || (action.equals("")));
         return Integer.parseInt(action);
-    }
-
-    public static String[] sortArrInAlphabeticOrder(String[] strings) {
-        String temp;
-        for (int i = 0; i < strings.length; i++) {
-            for (int j = i + 1; j < strings.length; j++) {
-                if (strings[i].compareTo(strings[j]) > 0) {
-                    temp = strings[i];
-                    strings[i] = strings[j];
-                    strings[j] = temp;
-                }
-            }
-        }
-        return strings;
     }
 }
