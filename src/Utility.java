@@ -19,13 +19,13 @@ public class Utility {
 
     public static boolean stringContainsOnlyDigits(String str) {
         for (int i = 0; i < str.length(); i++) {
-            if (Character.isDigit(str.charAt(i)) == false) return false;
+            if (!Character.isDigit(str.charAt(i))) return false;
         }
         return true;
     }
 
     public static int readNumInGivenRange(int a, int b) {
-        String action = "";
+        String action;
         do {
             action = DataInput.getString();
             if (!Utility.numberInGivenRange(action, a, b) || (action.equals("")))

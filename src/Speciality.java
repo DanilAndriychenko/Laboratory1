@@ -10,10 +10,6 @@ public class Speciality {
         this.students = new DynamicArray();
     }
 
-    Speciality(){
-
-    }
-
     public String getName() {
         return name;
     }

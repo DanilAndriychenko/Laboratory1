@@ -54,9 +54,6 @@ public class Academy {
             case 5:
                 performFifthCase();
                 break;
-            case 6:
-                performSixthCase();
-                break;
             case 7:
                 performSeventhCase();
                 break;
@@ -335,7 +332,7 @@ public class Academy {
                             int chosenNumOfStudent = Utility.readNumInGivenRange(1, studentsOnChosenSpeciality.getRealLength()) - 1;
                             Student chosenStudent = (Student) studentsOnChosenSpeciality.get(chosenNumOfStudent);
                             System.out.print("Enter new student's full name(if you don't want to change it - enter space):");
-                            String newName = "";
+                            String newName;
                             do{
                                 newName = DataInput.getString();
                                 if (newName.equalsIgnoreCase(" ")) {
@@ -425,7 +422,7 @@ public class Academy {
                             int chosenNumOfTutors = Utility.readNumInGivenRange(1, tutorsOnChosenDepartment.getRealLength()) - 1;
                             Tutor chosenTutor = (Tutor) tutorsOnChosenDepartment.get(chosenNumOfTutors);
                             System.out.print("Enter new tutor's full name(if you don't want to change it - enter space):");
-                            String newName = "";
+                            String newName;
                             do{
                                 newName = DataInput.getString();
                                 if (newName.equalsIgnoreCase(" ")) {
@@ -454,46 +451,43 @@ public class Academy {
         }
     }
 
-    private void performSixthCase(){
-        System.out.println("To find a student enter information that is known about him/her.");
-        System.out.println("Enter student`s name(if the name is unknown enter space)");
-        String name = "";
-        do{
-
-        }while(true);
-    }
-
-    //TODO. Delay
     private void performSeventhCase() {
-        String studFirstCourse = "", studSecondCourse = "", studThirdCourse = "", studFourthCourse = "";
+        StringBuilder studFirstCourse = new StringBuilder();
+        StringBuilder studSecondCourse = new StringBuilder();
+        StringBuilder studThirdCourse = new StringBuilder();
+        StringBuilder studFourthCourse = new StringBuilder();
         for (int i = 0; i < students.getRealLength(); i++) {
             switch (((Student) students.get(i)).getCourse()) {
                 case 1:
-                    studFirstCourse += (students.get(i) + "\n");
+                    studFirstCourse.append(students.get(i)).append("\n");
                     break;
                 case 2:
-                    studSecondCourse += (students.get(i) + "\n");
+                    studSecondCourse.append(students.get(i)).append("\n");
                     break;
                 case 3:
-                    studThirdCourse += (students.get(i) + "\n");
+                    studThirdCourse.append(students.get(i)).append("\n");
                     break;
                 case 4:
-                    studFourthCourse += (students.get(i) + "\n");
+                    studFourthCourse.append(students.get(i)).append("\n");
             }
         }
-        System.out.println(studFirstCourse + studSecondCourse + studThirdCourse + studFourthCourse);
+        System.out.println(studFirstCourse + studSecondCourse.toString() + studThirdCourse + studFourthCourse);
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    //TODO. Recursive, delay
     private void performTenthCase() {
-        Faculty chosenFaculty;
-        Speciality chosenSpeciality;
+        Faculty chosenFaculty = null;
+        Speciality chosenSpeciality = null;
         if (faculties.getRealLength() == 0) {
             System.out.println("List of faculties is empty.\n" +
                     "Do you want to add one?[y/n]");
             char yn = DataInput.getChar();
             if (yn == 'y') addNewFaculty();
-            return;
+            performTenthCase();
         } else {
             System.out.println("Choose faculty on which your speciality located.\n" +
                     "List of faculties:");
@@ -506,7 +500,7 @@ public class Academy {
                         "Do you want to add one?[y/n]");
                 char yn = DataInput.getChar();
                 if (yn == 'y') addNewSpecialityOnChosenFaculty(chosenFaculty);
-                return;
+               performTenthCase();
             } else {
                 System.out.println("List of specialities:");
                 for (int i = 0; i < chosenFaculty.getSpecialities().getRealLength(); i++)
@@ -515,27 +509,34 @@ public class Academy {
                 chosenSpeciality = (Speciality) chosenFaculty.getSpecialities().get(chosenNumOfSpeciality);
             }
         }
-        String studFirstCourseOnSpeciality = "", studSecondCourseOnSpeciality = "", studThirdCourseOnSpeciality = "",
-                studFourthCourseOnSpeciality = "";
+        StringBuilder studFirstCourseOnSpeciality = new StringBuilder();
+        StringBuilder studSecondCourseOnSpeciality = new StringBuilder();
+        StringBuilder studThirdCourseOnSpeciality = new StringBuilder();
+        StringBuilder studFourthCourseOnSpeciality = new StringBuilder();
         for (int i = 0; i < students.getRealLength(); i++) {
             if (((Student) students.get(i)).getFaculty() == chosenFaculty && ((Student) students.get(i)).getSpeciality() == chosenSpeciality) {
                 switch (((Student) students.get(i)).getCourse()) {
                     case 1:
-                        studFirstCourseOnSpeciality += (students.get(i) + "\n");
+                        studFirstCourseOnSpeciality.append(students.get(i)).append("\n");
                         break;
                     case 2:
-                        studSecondCourseOnSpeciality += (students.get(i) + "\n");
+                        studSecondCourseOnSpeciality.append(students.get(i)).append("\n");
                         break;
                     case 3:
-                        studThirdCourseOnSpeciality += (students.get(i) + "\n");
+                        studThirdCourseOnSpeciality.append(students.get(i)).append("\n");
                         break;
                     case 4:
-                        studFourthCourseOnSpeciality += (students.get(i) + "\n");
+                        studFourthCourseOnSpeciality.append(students.get(i)).append("\n");
                 }
             }
 
         }
-        System.out.println(studFirstCourseOnSpeciality + studSecondCourseOnSpeciality + studThirdCourseOnSpeciality + studFourthCourseOnSpeciality);
+        System.out.println(studFirstCourseOnSpeciality + studSecondCourseOnSpeciality.toString() + studThirdCourseOnSpeciality + studFourthCourseOnSpeciality);
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addNewFaculty() {
@@ -552,7 +553,7 @@ public class Academy {
 
     private void addNewTutorOnChosenDepartment(Department chosenDepartment) {
         System.out.print("Enter tutor's full name:");
-        String fullName = "";
+        String fullName;
         do{
             fullName = DataInput.getString();
             if (!Utility.lineContainsOnlyLetters(fullName))
@@ -600,7 +601,7 @@ public class Academy {
 
     private void addNewStudentOnChosenSpeciality(Speciality chosenSpeciality){
         System.out.print("Enter student's full name:");
-        String fullName = "";
+        String fullName;
         do{
             fullName = DataInput.getString();
             if (!Utility.lineContainsOnlyLetters(fullName))

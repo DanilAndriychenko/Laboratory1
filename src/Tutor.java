@@ -1,8 +1,8 @@
 public class Tutor {
 
-    String name;
-    Faculty faculty;
-    Department department;
+    private String name;
+    private Faculty faculty;
+    private Department department;
 
     Tutor(String name, Faculty faculty, Department department) {
         this.name = name;

@@ -6,8 +6,7 @@ public final class DataInput {
 
     public static Long getLong() {
         String s = getString();
-        Long value = Long.valueOf(s);
-        return value;
+        return Long.valueOf(s);
     }
 
     public static char getChar() throws NullPointerException, StringIndexOutOfBoundsException {
@@ -16,36 +15,32 @@ public final class DataInput {
     }
 
     public static Integer getInt() {
-        String s = "";
+        String s;
         s = getString();
-        Integer value = Integer.valueOf(s);
-        return value;
+        return Integer.valueOf(s);
 
     }
 
     public static Integer getInt(String text) {
         System.out.println(text);
-        String s = "";
+        String s;
         s = getString();
-        Integer value = Integer.valueOf(s);
-        return value;
+        return Integer.valueOf(s);
 
     }
 
     public static Double getDouble() {
-        String s = "";
+        String s;
         s = getString();
-        Double value = Double.valueOf(s);
-        return value;
+        return Double.valueOf(s);
 
     }
 
     public static Double getDouble(String text) {
         System.out.println(text);
-        String s = "";
+        String s;
         s = getString();
-        Double value = Double.valueOf(s);
-        return value;
+        return Double.valueOf(s);
 
     }
 
@@ -57,8 +52,6 @@ public final class DataInput {
             s = br.readLine();
         } catch (IOException e) {
             System.out.println("Line wasn't found.");
-        } catch (NumberFormatException e) {
-            System.out.println("Line is empty.");
         } catch (IllegalArgumentException e) {
             System.out.println("Line is empty.");
         }

@@ -2,12 +2,11 @@ public class Faculty {
 
     private String name;
     private DynamicArray specialities;
-    private DynamicArray departments;
+    private DynamicArray departments = new DynamicArray();
 
     Faculty(String name) {
         this.name = name;
         specialities = new DynamicArray();
-        departments = new DynamicArray();
     }
 
     public DynamicArray getSpecialities() {
