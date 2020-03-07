@@ -51,6 +51,9 @@ public class Academy {
             case 4:
                 performFourthCase();
                 break;
+            case 5:
+                performFifthCase();
+                break;
             case 7:
                 performSeventhCase();
                 break;
@@ -360,6 +363,107 @@ public class Academy {
                 }
             }
         }
+    }
+
+    private void performFifthCase() {
+        Faculty chosenFaculty;
+        Department chosenDepartment;
+        if (faculties.getRealLength() == 0) {
+            System.out.println("List of faculties is empty.\n" +
+                    "Do you want to add one?[y/n]");
+            char yn = DataInput.getChar();
+            if (yn == 'y') {
+                addNewFaculty();
+                performFifthCase();
+            }
+        } else {
+            System.out.println("Choose faculty on which your department is located.\n" +
+                    "List of faculties:");
+            for (int i = 0; i < faculties.getRealLength(); i++)
+                System.out.println("" + (i + 1) + ". " + faculties.get(i));
+            int chosenNumOfFaculty = Utility.readNumInGivenRange(1, faculties.getRealLength()) - 1;
+            chosenFaculty = (Faculty) faculties.get(chosenNumOfFaculty);
+            if (chosenFaculty.getDepartments().getRealLength() == 0) {
+                System.out.println("List of departments on " + chosenFaculty + " is empty.\n" +
+                        "Do you want to add one?[y/n]");
+                char yn = DataInput.getChar();
+                if (yn == 'y') {
+                    addNewDepartmentOnChosenFaculty(chosenFaculty);
+                    performFifthCase();
+                }
+            } else {
+                System.out.println("List of departments:");
+                for (int i = 0; i < chosenFaculty.getDepartments().getRealLength(); i++)
+                    System.out.println("" + (i + 1) + ". " + chosenFaculty.getDepartments().get(i));
+                int chosenNumOfDepartment = Utility.readNumInGivenRange(1, chosenFaculty.getDepartments().getRealLength()) - 1;
+                chosenDepartment = (Department) chosenFaculty.getDepartments().get(chosenNumOfDepartment);
+                if (chosenDepartment.getTutors().getRealLength() == 0) {
+                    System.out.println("List of tutors on " + chosenDepartment + " is empty.\n" +
+                            "Do you want to add one?[y/n]");
+                    char yn = DataInput.getChar();
+                    if (yn == 'y') {
+                        addNewTutorOnChosenDepartment(chosenDepartment);
+                    }
+                }else{
+                    System.out.println("Choose an action:\n" +
+                            "1. Add new tutor; \n" +
+                            "2. Edit a tutor; \n" +
+                            "3. Delete a tutor;\n" +
+                            "4. Back to the previous menu;");
+                    switch (Utility.readNumInGivenRange(1, 4)) {
+                        case 1:
+                            addNewTutorOnChosenDepartment(chosenDepartment);
+                            break;
+                        case 2:
+                            DynamicArray tutorsOnChosenDepartment = chosenDepartment.getTutors();
+                            System.out.println("List of tutors:");
+                            for (int i = 0; i < tutorsOnChosenDepartment.getRealLength(); i++)
+                                System.out.println("" + (i + 1) + ". " + tutorsOnChosenDepartment.get(i));
+                            int chosenNumOfTutors = Utility.readNumInGivenRange(1, tutorsOnChosenDepartment.getRealLength()) - 1;
+                            Tutor chosenTutor = (Tutor) tutorsOnChosenDepartment.get(chosenNumOfTutors);
+                            System.out.print("Enter new tutor's full name(if you don't want to change it - enter space):");
+                            String newName = "";
+                            do{
+                                newName = DataInput.getString();
+                                if (newName.equalsIgnoreCase(" ")) {
+                                    newName = chosenTutor.getName();
+                                    break;
+                                }
+                                else if (!Utility.lineContainsOnlyLetters(newName))
+                                    System.out.print("\nName must contain only letters. Please, enter again:");
+                                else if (!nameIsUniqueInDynamicArray(newName, chosenDepartment.getTutors()))
+                                    System.out.print("\nThe name is not unique. Please, enter again:");
+                            } while (!Utility.lineContainsOnlyLetters(newName) || !nameIsUniqueInDynamicArray(newName, chosenDepartment.getTutors()));
+                            chosenTutor.setName(newName);
+                            break;
+                        case 3:
+                            tutorsOnChosenDepartment = chosenDepartment.getTutors();
+                            System.out.println("List of tutors:");
+                            for (int i = 0; i < tutorsOnChosenDepartment.getRealLength(); i++)
+                                System.out.println("" + (i + 1) + ". " + tutorsOnChosenDepartment.get(i));
+                            System.out.print("Choose the number of tutor you want to delete:");
+                            int numToDelete = Utility.readNumInGivenRange(1, tutorsOnChosenDepartment.getRealLength())-1;
+                            tutorsOnChosenDepartment.delete(numToDelete);
+                            tutors.delete(numToDelete);
+                    }
+                }
+            }
+        }
+    }
+
+    private void addNewTutorOnChosenDepartment(Department chosenDepartment) {
+        System.out.print("Enter tutor's full name:");
+        String fullName = "";
+        do{
+            fullName = DataInput.getString();
+            if (!Utility.lineContainsOnlyLetters(fullName))
+                System.out.print("\nName must contain only letters. Please, enter again:");
+            else if (!nameIsUniqueInDynamicArray(fullName, chosenDepartment.getTutors()))
+                System.out.print("\nThe name is not unique. Please, enter again:");
+        } while (!Utility.lineContainsOnlyLetters(fullName) || !nameIsUniqueInDynamicArray(fullName, chosenDepartment.getTutors()));
+        Tutor newTutor = new Tutor(fullName, chosenDepartment.getFaculty(), chosenDepartment);
+        tutors.add(newTutor);
+        chosenDepartment.setTutor(newTutor);
     }
 
     //TODO. Delay

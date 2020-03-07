@@ -10,6 +10,22 @@ public class Tutor {
         this.department = department;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
     @Override
     public String toString() {
         return ("Tutor " + name + " teaches at department " + department + " of " + faculty + ".");
