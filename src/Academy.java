@@ -54,6 +54,9 @@ public class Academy {
             case 5:
                 performFifthCase();
                 break;
+            case 6:
+                performSixthCase();
+                break;
             case 7:
                 performSeventhCase();
                 break;
@@ -451,19 +454,13 @@ public class Academy {
         }
     }
 
-    private void addNewTutorOnChosenDepartment(Department chosenDepartment) {
-        System.out.print("Enter tutor's full name:");
-        String fullName = "";
+    private void performSixthCase(){
+        System.out.println("To find a student enter information that is known about him/her.");
+        System.out.println("Enter student`s name(if the name is unknown enter space)");
+        String name = "";
         do{
-            fullName = DataInput.getString();
-            if (!Utility.lineContainsOnlyLetters(fullName))
-                System.out.print("\nName must contain only letters. Please, enter again:");
-            else if (!nameIsUniqueInDynamicArray(fullName, chosenDepartment.getTutors()))
-                System.out.print("\nThe name is not unique. Please, enter again:");
-        } while (!Utility.lineContainsOnlyLetters(fullName) || !nameIsUniqueInDynamicArray(fullName, chosenDepartment.getTutors()));
-        Tutor newTutor = new Tutor(fullName, chosenDepartment.getFaculty(), chosenDepartment);
-        tutors.add(newTutor);
-        chosenDepartment.setTutor(newTutor);
+
+        }while(true);
     }
 
     //TODO. Delay
@@ -551,6 +548,21 @@ public class Academy {
                 System.out.println("There is a faculty with the same name. Create a unique one.");
         } while (!(Utility.lineContainsOnlyLetters(name) && nameIsUniqueInDynamicArray(name, faculties)));
         faculties.add(new Faculty(name));
+    }
+
+    private void addNewTutorOnChosenDepartment(Department chosenDepartment) {
+        System.out.print("Enter tutor's full name:");
+        String fullName = "";
+        do{
+            fullName = DataInput.getString();
+            if (!Utility.lineContainsOnlyLetters(fullName))
+                System.out.print("\nName must contain only letters. Please, enter again:");
+            else if (!nameIsUniqueInDynamicArray(fullName, chosenDepartment.getTutors()))
+                System.out.print("\nThe name is not unique. Please, enter again:");
+        } while (!Utility.lineContainsOnlyLetters(fullName) || !nameIsUniqueInDynamicArray(fullName, chosenDepartment.getTutors()));
+        Tutor newTutor = new Tutor(fullName, chosenDepartment.getFaculty(), chosenDepartment);
+        tutors.add(newTutor);
+        chosenDepartment.setTutor(newTutor);
     }
 
     private boolean nameIsUniqueInDynamicArray(String name, DynamicArray dynamicArray) {
